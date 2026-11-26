@@ -3,28 +3,28 @@
 The GPS Swears It Was a Shortcut bounty.
 
 Why this entry fits the judge's brief: it is the GPS talking,
-smug and defensive, caught sending the driver into a cul-de-sac
-and blaming the map for it. The setup (the cul-de-sac was a
-shortcut) earns the punch, which lands in the turn: it only
-shortcuts to nowhere. The fresh, specific detail is the
-cul-de-sac, not the usual recalculating joke, and the line
-reads cleanly aloud in one breath.
+smug and defensive, caught sending the driver into a lake and
+insisting it was the shortcut all along. The setup (the lake
+wasn't a wrong turn) earns the punch, which lands in the turn:
+the map just never mentioned the car can't swim. The fresh,
+specific detail is the lake, not the usual recalculating joke,
+and the line reads cleanly aloud in one breath.
 """
 
 import os
 
 LINE = (
-    "The cul-de-sac was a shortcut \u2014 it just shortcuts to nowhere. "
-    "Blame the map; I only read it out loud."
+    "That lake wasn't a wrong turn \u2014 it was the shortcut. "
+    "The map just never mentioned your car can't swim."
 )
 
 
 def validate_line(line: str) -> None:
     # The gate: UTF-8 text, 1-200 characters, a single line.
-    # The line was counted at exactly 101 characters; pin that
+    # The line was counted at exactly 102 characters; pin that
     # so any accidental wording change fails loudly instead of
     # silently shipping a different (or over-long) entry.
-    assert len(line) == 101, f"line is {len(line)} characters, expected 101"
+    assert len(line) == 102, f"line is {len(line)} characters, expected 102"
     assert "\n" not in line, "line must be a single line"
     assert "\r" not in line, "line must be a single line"
     assert 1 <= len(line) <= 200, f"line is {len(line)} characters"
@@ -32,8 +32,8 @@ def validate_line(line: str) -> None:
     # The judge's brief: the GPS's own excuse, blaming the map,
     # with a fresh specific detail -- and not the usual
     # recalculating joke the brief explicitly counts against.
-    assert "cul-de-sac" in line, "line must keep its specific detail"
-    assert "Blame the map" in line, "line must blame the map"
+    assert "lake" in line, "line must keep its specific detail"
+    assert "can't swim" in line, "line must keep its punchline"
     assert "recalculating" not in line.lower(), "line must not reuse the cliche"
 
 
@@ -43,8 +43,8 @@ def verify_output(path: str) -> None:
     with open(path, "rb") as f:
         raw = f.read()
     assert raw.decode("utf-8") == LINE, "entry.txt does not match the line"
-    assert len(raw.decode("utf-8")) == 101, "entry.txt is not 101 characters"
-    assert len(raw) == 103, "entry.txt is not 103 bytes (em-dash must survive)"
+    assert len(raw.decode("utf-8")) == 102, "entry.txt is not 102 characters"
+    assert len(raw) == 104, "entry.txt is not 104 bytes (em-dash must survive)"
     assert b"\n" not in raw, "entry.txt must be a single line"
     assert not raw.endswith(b"\n"), "entry.txt must have no trailing newline"
 
